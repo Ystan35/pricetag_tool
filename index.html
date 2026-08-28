@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F7FB">
+<title>Longwan Price Checker</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <div class="brand">
+      <span class="mark">▮▯▮</span>
+      <h1>Price Check</h1>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="pending-btn" title="Pending flags" aria-label="Pending flags">
+        📤
+        <span class="badge" id="pending-badge">0</span>
+      </button>
+      <button class="icon-btn" id="settings-btn" title="Settings" aria-label="Settings">⚙</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="scan-card">
+      <p class="field-label">Barcode</p>
+      <div class="scan-row">
+        <input id="barcode-input" type="text" inputmode="numeric" placeholder="Scan or type barcode" autocomplete="off" autocorrect="off" autocapitalize="off">
+        <button class="clear-btn" id="clear-btn" type="button" aria-label="Clear">✕</button>
+      </div>
+      <p class="hint">Bluetooth/OTG scanners type into this field automatically — just aim and pull the trigger.</p>
+    </section>
+
+    <section class="result-card" id="result-card">
+      <p class="product-name" id="product-name">—</p>
+      <p class="product-code" id="product-code">—</p>
+
+      <div class="readout">
+        <div class="readout-cell system wide">
+          <div class="cell-label">System price</div>
+          <div class="cell-value" id="system-price">--.--</div>
+        </div>
+      </div>
+
+      <p class="field-label compare-label">Does the shelf tag match this price?</p>
+      <div class="compare-row">
+        <button class="btn btn-match" id="match-btn" disabled>✓ Same</button>
+        <button class="btn btn-mismatch" id="mismatch-btn" disabled>✗ Different</button>
+      </div>
+
+      <div class="result-actions">
+        <button class="btn btn-ghost" id="reset-btn">Next scan</button>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast"></div>
+
+  <!-- Settings sheet -->
+  <div class="sheet-backdrop" id="settings-backdrop"></div>
+  <div class="sheet" id="settings-sheet">
+    <div class="sheet-handle"></div>
+    <h2>Settings</h2>
+    <p class="sub">Point this phone at the Price Tag Tool computer on this store's Wi-Fi.</p>
+
+    <div class="status-row" id="conn-status">
+      <span class="dot" id="conn-dot"></span>
+      <span id="conn-text">Not connected</span>
+    </div>
+
+    <div class="form-group">
+      <label for="server-url-input">Price Tag Tool address</label>
+      <input id="server-url-input" type="text" inputmode="url" placeholder="https://192.168.1.50:8765" autocomplete="off" autocorrect="off" autocapitalize="off">
+      <p class="help">Shown on the Price Tag Tool computer's screen — same Wi-Fi network required.</p>
+    </div>
+
+    <div class="scan-block">
+      <button class="btn btn-ghost" id="scan-servers-btn" type="button" style="width:100%;">🔍 Find automatically</button>
+      <p class="scan-status" id="scan-status"></p>
+      <div class="scan-results" id="scan-results"></div>
+    </div>
+
+    <div class="sheet-actions">
+      <button class="btn btn-ghost" id="test-conn-btn">Test connection</button>
+      <button class="btn btn-primary" id="save-settings-btn">Save</button>
+    </div>
+  </div>
+
+  <!-- Pending sheet -->
+  <div class="sheet-backdrop" id="pending-backdrop"></div>
+  <div class="sheet" id="pending-sheet">
+    <div class="sheet-handle"></div>
+    <h2>Pending flags</h2>
+    <p class="sub">Flags saved here couldn't reach the Price Tag Tool yet and will retry automatically.</p>
+    <div id="pending-list"></div>
+    <div class="sheet-actions">
+      <button class="btn btn-ghost" id="close-pending-btn">Close</button>
+      <button class="btn btn-primary" id="retry-pending-btn">Retry now</button>
+    </div>
+  </div>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>
